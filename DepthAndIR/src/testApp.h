@@ -1,22 +1,19 @@
 #pragma once
 
 #include "ofMain.h"
-
+#include "pxcupipeline.h"
 class testApp : public ofBaseApp{
 
 	public:
 		void setup();
 		void update();
 		void draw();
+		void convertImage(unsigned short *src, unsigned char *dst, int w, int h);
 
-		void keyPressed  (int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+		int mirw,mirh,mdw,mdh;
+		short *mIrBuffer, *mDepthBuffer;
+		unsigned char *mIrMap, *mDepthMap;
+		ofTexture mDepthTex, mIrTex;
+
+		PXCUPipeline_Instance mSession;
 };
