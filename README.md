@@ -13,3 +13,5 @@ make sure it's directly under apps, as opposed to <b>apps\myApps</b>.
 * <b>Hands</b> - Hand position and openness tracking
 * <b>MSAFluidPXC</b> - Simple demo using hand tracking to draw MSAFluid
   * Requires [ofxMSAFluid](https://github.com/memo/ofxMSAFluid.git) and [ofxMSACore](https://github.com/memo/ofxMSACore.git)
+
+Questions, Comments, or any Samples you'd like to see? [Please Email Seth!](mailto:seth.gibson@intel.com)
