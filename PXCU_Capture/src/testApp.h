@@ -1,22 +1,28 @@
-#pragma once
+#ifndef TEST_APP_GUARD
+#define TEST_APP_GUARD
 
 #include "ofMain.h"
+#include "pxcupipeline.h"
 
-class testApp : public ofBaseApp{
+class testApp : public ofBaseApp
+{
+public:
+	void setup();
+	void update();
+	void draw();
+	void exit();
 
-	public:
-		void setup();
-		void update();
-		void draw();
+private:
+	int mCW, mCH, mLW, mLH;
+	unsigned char *mRGBMap, *mLabelMap, *mIRMap, *mDepthMap;
+	short *mIRBuffer, *mDepthBuffer;
 
-		void keyPressed  (int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+	ofTexture mRGBTexture;
+	ofTexture mLabelTexture;
+	ofTexture mDepthTexture;
+	ofTexture mIRTexture;
+
+	PXCUPipeline_Instance mSession;
 };
+
+#endif
