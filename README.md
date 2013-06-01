@@ -2,6 +2,9 @@
 <b>Download the [Perceptual Computing SDK](http://software.intel.com/en-us/vcsource/tools/perceptual-computing-sdk)</b><br/>
 <b>Download [openFrameworks](http://openframeworks.cc)</b><br/>
 <br/>
+Sync this repo into your <b>$(OFX_ROOT)/apps</b> folder so you end up with something like:<br/>
+<b>of_v0.7.4_vs2010_release/apps/ofxApps</b><br/>
+<br/>
 Samples using the C-style interface (PXCUPipeline):
 <ul>
 <li><b>PXCU_Capture</b> - Video capture using the C-interface (pxcupipeline)</li>
