@@ -13,7 +13,7 @@ Samples using the C-style interface (PXCUPipeline):
 </ul>
 To use the C-style interface in a Cinder project:
 <ul>
-<li>Add the directories <b>$(PCSDK_DIR)\include</b> and <b>$(PCSDK_DIR)\framework\common\pxcupipeline\include</b> to your include directories</li>
+<li>Add the directories <b>$(PCSDK_DIR)\include</b>, <b>$(PCSDK_DIR)\sample\common\include</b> and <b>$(PCSDK_DIR)\framework\common\pxcupipeline\include</b> to your include directories</li>
 <li>Add the directories <b>$(PCSDK_DIR)\lib\win32</b> and <b>$(PCSDK_DIR)\framework\common\lib\win32</b> to your library directories</li>
 <li>Include the <b>pxcupipeline.h</b> header</li>
 <li>Add <b>pxcupipeline.cpp</b> to your project's source files, found in <b>$(PCSDK_DIR)\framework\common\pxcupipeline\src</b>
