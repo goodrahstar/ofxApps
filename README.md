@@ -7,9 +7,9 @@ Sync this repo into your <b>$(OFX_ROOT)/apps</b> folder so you end up with somet
 <br/>
 Samples using the C-style interface (PXCUPipeline):
 <ul>
-<li><b>PXCU_Capture</b> - Video capture using the C-interface (pxcupipeline)</li>
-<li><b>PXCU_Faces</b> - Face location and landmark tracking using the C-interface (pxcupipeline)</li>
-<li><b>PXCU_Hands</b> - Hand and Fingertip using the C-interface (pxcupipeline)</li>
+<li><b>PXCU_Capture</b> - Video capture (RGB, depth, blobs, ir)</li>
+<li><b>PXCU_Faces</b> - Face location and landmark tracking</li>
+<li><b>PXCU_Hands</b> - Hand and Fingertip detection</li>
 <li><b>PXCU_PointCloud (untested as of 06.09)</b> - Point cloud rendering using VBOs</li>
 <ul>
 <li>Requires <a href="https://github.com/rezaali/ofxUI">ofxUI</a> and ofxXmlSettings</li>
