@@ -19,11 +19,15 @@ void testApp::setup()
 	mSteps.push_back("8");
 	mSteps.push_back("16");
 	mSteps.push_back("20");
-	/*
+	
 	mSession = PXCUPipeline_Create();
-	PXCUPipeline_Init(mSession, (PXCUPipeline)PXCU_PIPELINE_DEPTH_QVGA);
-	PXCUPipeline_QueryDepthMapSize(mSession, &mDW, &mDH);
-	*/
+	PXCUPipeline_Init(mSession, (PXCUPipeline)(PXCU_PIPELINE_COLOR_VGA|PXCU_PIPELINE_DEPTH_QVGA));
+	if(PXCUPipeline_QueryDepthMapSize(mSession, &mDW, &mDH))
+	{
+		mDepthMap = new short[mDW*mDH];
+		mUVMap = new float[mDW*mDH*2];
+	}
+	
 	mSkip = mPSkip = 1;
 
 	for(int y = 0; y < mDH - mSkip; y += mSkip)
@@ -48,20 +52,35 @@ void testApp::setup()
 
 //--------------------------------------------------------------
 void testApp::update()
-{/*
+{
 	if(PXCUPipeline_AcquireFrame(mSession,false))
 	{
 		mVerts.clear();
+		mColors.clear();
 		if(PXCUPipeline_QueryDepthMap(mSession, mDepthMap))
 		{
+			PXCUPipeline_QueryUVMap(mSession, mUVMap);
 			for(int y=0;y<mDH-mSkip;y+=mSkip)
 			{
 				for(int x=0;x<mDW-mSkip;x+=mSkip)
 				{
-					float d = (float)mDepthMap[y*mDW+x];
+					int di = y*mDW+x;
+					float d = (float)mDepthMap[di];
 					if(d<32000)
 					{
 						mVerts.push_back(ofVec3f(x,y,ofMap(d,0,1800,-240,240)));
+						int sx=(int)(mUVMap[(y*mDW+x)*2+0]*mDW+0.5) * 2;
+						int sy=(int)(mUVMap[(y*mDW+x)*2+1]*mDH+0.5) * 2;
+						if(sx>=0&&sx<mCW&&sy>=0&&sy<mCH)
+						{
+							int _c = (int)mRGBMap[sy*mCW+sx];
+
+							//Thanks, Processing!
+							float _r = (float)((_c>>16)&0xFF)/255.0f;
+							float _g = (float)((_c>>8)&0xFF)/255.0f;
+							float _b = (float)(_c&0xFF)/255.0f;
+							mColors.push_back(ofFloatColor(_r,_g,_b));
+						}
 					}
 				}
 			}
@@ -69,19 +88,8 @@ void testApp::update()
 		PXCUPipeline_ReleaseFrame(mSession);
 		mTotal = mVerts.size();
 		mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
-	}*/
-	if(true) //testing GL_STREAM_DRAW
-	{
-		mVerts.clear();
-		for(int y = 0; y < mDH - mSkip; y += mSkip)
-		{
-			for(int x = 0; x < mDW - mSkip; x += mSkip)
-			{
-				mVerts.push_back(ofVec3f(x-mDW*0.5f,y-mDH*0.5f,0));
-			}
-		}
-		mTotal = mVerts.size();
-		mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
+		mTotal = mColors.size();
+		mVBO.setColorData(&mColors[0],mTotal, GL_STREAM_DRAW);
 	}
 }
 
@@ -93,12 +101,10 @@ void testApp::draw()
 	glEnable(GL_DEPTH_TEST);	
 	ofScale(mScale, -mScale, mScale); // make y point down
 
-	int pTotal = mVerts.size();
+	mTotal = mVerts.size();
 	mVBO.draw(GL_POINTS, 0, mTotal);
 	glDisable(GL_DEPTH_TEST);
 	cam.end();
-	
-	// draw the framerate in the top left corner
 }
 
 void testApp::guiEvent(ofxUIEventArgs &e)

@@ -12,13 +12,14 @@ public:
 	void update();
 	void draw();
 
-
 private:
-	int mDW, mDH, mSkip, mPSkip, mTotal;
+	int mDW, mDH, mCW, mCH, mSkip, mPSkip, mTotal;
 	float mScale;
 	short *mDepthMap;
+	float *mUVMap;
 	unsigned char *mRGBMap;
 	vector<ofVec3f> mVerts;
+	vector<ofFloatColor> mColors;
 	vector<string> mSteps;
 
 	ofEasyCam cam;
