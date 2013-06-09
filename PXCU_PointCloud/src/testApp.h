@@ -13,7 +13,7 @@ public:
 	void draw();
 
 private:
-	int mDW, mDH, mCW, mCH, mSkip, mPSkip, mTotal;
+	int mDW, mDH, mCW, mCH, mSkip, mTotal;
 	float mScale;
 	short *mDepthMap;
 	float *mUVMap;

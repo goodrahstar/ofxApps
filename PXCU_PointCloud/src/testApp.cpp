@@ -13,12 +13,7 @@ void testApp::setup()
 	mDH=240;
 	mDW=320;
 	mScale=1;
-	mSteps.push_back("1");
-	mSteps.push_back("2");
-	mSteps.push_back("4");
-	mSteps.push_back("8");
-	mSteps.push_back("16");
-	mSteps.push_back("20");
+	mSteps.push_back("1");mSteps.push_back("2");mSteps.push_back("4");mSteps.push_back("8");mSteps.push_back("16");mSteps.push_back("20");
 	
 	mSession = PXCUPipeline_Create();
 	PXCUPipeline_Init(mSession, (PXCUPipeline)(PXCU_PIPELINE_COLOR_VGA|PXCU_PIPELINE_DEPTH_QVGA));
@@ -27,9 +22,9 @@ void testApp::setup()
 		mDepthMap = new short[mDW*mDH];
 		mUVMap = new float[mDW*mDH*2];
 	}
+	if(PXCUPipeline_QueryRGBSize(mSession, &mCW, &mCH))
+		mRGBMap = new unsigned char[mCW*mCH*4];
 	
-	mSkip = mPSkip = 1;
-
 	for(int y = 0; y < mDH - mSkip; y += mSkip)
 	{
 		for(int x = 0; x < mDW - mSkip; x += mSkip)
@@ -73,23 +68,21 @@ void testApp::update()
 						int sy=(int)(mUVMap[(y*mDW+x)*2+1]*mDH+0.5) * 2;
 						if(sx>=0&&sx<mCW&&sy>=0&&sy<mCH)
 						{
-							int _c = (int)mRGBMap[sy*mCW+sx];
-
-							//Thanks, Processing!
-							float _r = (float)((_c>>16)&0xFF)/255.0f;
-							float _g = (float)((_c>>8)&0xFF)/255.0f;
-							float _b = (float)(_c&0xFF)/255.0f;
-							mColors.push_back(ofFloatColor(_r,_g,_b));
+							//crack out individual color vals and scale
+							float _r = mRGBMap[(sy*mCW+sx)*4]/255.0f;
+							float _g = mRGBMap[(sy*mCW+sx)*4+1]/255.0f;
+							float _b = mRGBMap[(sy*mCW+sx)*4+2]/255.0f;
+							mColors.push_back(ofFloatColor(_r,_g,_b,1.0f));
 						}
 					}
 				}
 			}
 		}
 		PXCUPipeline_ReleaseFrame(mSession);
-		mTotal = mVerts.size();
-		mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
 		mTotal = mColors.size();
 		mVBO.setColorData(&mColors[0],mTotal, GL_STREAM_DRAW);
+		mTotal = mVerts.size();
+		mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
 	}
 }
 
@@ -101,7 +94,6 @@ void testApp::draw()
 	glEnable(GL_DEPTH_TEST);	
 	ofScale(mScale, -mScale, mScale); // make y point down
 
-	mTotal = mVerts.size();
 	mVBO.draw(GL_POINTS, 0, mTotal);
 	glDisable(GL_DEPTH_TEST);
 	cam.end();
@@ -117,7 +109,6 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	}
 	if(name=="RES")
 	{
-		mPSkip = mSkip;
 		ofxUIDropDownList *sender = (ofxUIDropDownList *)e.widget;
 		vector<ofxUIWidget *> &dlist = sender->getSelected();
 		if(dlist.size()>0)
