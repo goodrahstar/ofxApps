@@ -10,8 +10,12 @@ Samples using the C-style interface (PXCUPipeline):
 <li><b>PXCU_Capture</b> - Video capture using the C-interface (pxcupipeline)</li>
 <li><b>PXCU_Faces</b> - Face location and landmark tracking using the C-interface (pxcupipeline)</li>
 <li><b>PXCU_Hands</b> - Hand and Fingertip using the C-interface (pxcupipeline)</li>
+<li><b>PXCU_PointCloud (untested as of 06.09)</b> - Point cloud rendering using VBOs</li>
+<ul>
+<li>Requires <a href="https://github.com/rezaali/ofxUI">ofxUI</a> and ofxXmlSettings</li>
 </ul>
-To use the C-style interface in a Cinder project:
+</ul>
+To use the C-style interface in an ofx project:
 <ul>
 <li>Add the directories <b>$(PCSDK_DIR)\include</b>, <b>$(PCSDK_DIR)\sample\common\include</b> and <b>$(PCSDK_DIR)\framework\common\pxcupipeline\include</b> to your include directories</li>
 <li>Add the directories <b>$(PCSDK_DIR)\lib\win32</b> and <b>$(PCSDK_DIR)\framework\common\lib\win32</b> to your library directories</li>
