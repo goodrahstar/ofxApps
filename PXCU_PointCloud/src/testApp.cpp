@@ -34,7 +34,7 @@ void testApp::setup()
 		}
 	}
 	mTotal = mVerts.size();
-	mVBO.setVertexData(&mVerts[0], mTotal, GL_DYNAMIC_DRAW);
+	mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
 	
 	mGUI = new ofxUICanvas(0,0,200,100);
 	
@@ -52,19 +52,17 @@ void testApp::update()
 	if(PXCUPipeline_AcquireFrame(mSession,false))
 	{
 		mVerts.clear();
-		int vi=0;
 		if(PXCUPipeline_QueryDepthMap(mSession, mDepthMap))
 		{
 			for(int y=0;y<mDH-mSkip;y+=mSkip)
 			{
 				for(int x=0;x<mDW-mSkip;x+=mSkip)
 				{
-					float d = (float)mDepthMap[vi];
+					float d = (float)mDepthMap[y*mDW+x];
 					if(d<32000)
 					{
 						mVerts.push_back(ofVec3f(x,y,ofMap(d,0,1800,-240,240)));
 					}
-					++vi;
 				}
 			}
 		}
@@ -72,7 +70,7 @@ void testApp::update()
 		mTotal = mVerts.size();
 		mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
 	}*/
-	if(mSkip!=mPSkip)
+	if(true) //testing GL_STREAM_DRAW
 	{
 		mVerts.clear();
 		for(int y = 0; y < mDH - mSkip; y += mSkip)
@@ -83,7 +81,7 @@ void testApp::update()
 			}
 		}
 		mTotal = mVerts.size();
-		mVBO.setVertexData(&mVerts[0], mTotal, GL_DYNAMIC_DRAW);
+		mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
 	}
 }
 
