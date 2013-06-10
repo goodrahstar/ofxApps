@@ -1,15 +1,11 @@
 #include <sstream>
 #include "testApp.h"
 
-/*
-PerC SDK point cloud example based on ofx vboExample
-*/
 //--------------------------------------------------------------
 void testApp::setup()
 {
 	ofSetWindowShape(840,480);
 	ofSetFrameRate(60);
-	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 	mScale = 1;
 	mSkip = 1;
 	mColor = false;
@@ -22,29 +18,13 @@ void testApp::setup()
 	{
 		mDepthMap = new short[mDW*mDH];
 		mUVMap = new float[mDW*mDH*2];
+		mXOffset = mDW*0.5f;
+		mYOffset = mDH*0.5f;
 	}
 	if(PXCUPipeline_QueryRGBSize(mSession, &mCW, &mCH))
 		mRGBMap = new unsigned char[mCW*mCH*4];
 	
-	for(int y = 0; y < mDH - mSkip; y += mSkip)
-	{
-		for(int x = 0; x < mDW - mSkip; x += mSkip)
-		{
-			mVerts.push_back(ofVec3f(x-mDW*0.5f,y-mDH*0.5f,0));
-		}
-	}
-	mTotal = mVerts.size();
-	mVBO.setVertexData(&mVerts[0], mTotal, GL_STREAM_DRAW);
-	
-	mGUI = new ofxUICanvas(0,0,200,200);
-	
-	mGUI->addFPS();
-	mGUI->addSpacer(150,2);
-	mGUI->addSlider("SCALE",0.1f,2,mScale,150,10);
-	mGUI->addSpacer(150,2);
-	mGUI->addLabelToggle("COLOR", false, 150,10);
-	mGUI->addDropDownList("RES", mSteps,150);
-	ofAddListener(mGUI->newGUIEvent,this,&testApp::guiEvent);	
+	setupGUI();
 }
 
 //--------------------------------------------------------------
@@ -67,11 +47,8 @@ void testApp::update()
 					float d = (float)mDepthMap[di];
 					if(d<32000)
 					{
-						float xoffs = mDW*0.5f;
-						float yoffs = mDH*0.5f;
-						float vx = ofMap(x,0,mDW,-xoffs,xoffs);
-						float vy = ofMap(y,0,mDH,-yoffs,yoffs);
-						//mVerts.push_back(ofVec3f(vx,vy,ofMap((float)mDepthMap[di],0,1800,-240,240)));
+						float vx = ofMap(x,0,mDW,-mXOffset,mXOffset);
+						float vy = ofMap(y,0,mDH,-mYOffset,mYOffset);
 						
 						if(mColor)
 						{
@@ -111,14 +88,27 @@ void testApp::draw()
 {
 	ofBackground(64);
 	cam.begin();
-	glEnable(GL_DEPTH_TEST);	
-
 	ofScale(mScale, -mScale, -mScale); // make y point down
 	if(mTotal>0)
 		mVBO.draw(GL_POINTS, 0, mTotal);
-
-	glDisable(GL_DEPTH_TEST);
 	cam.end();
+}
+
+void testApp::exit()
+{
+	PXCUPipeline_Close(mSession);
+}
+
+void testApp::setupGUI()
+{
+	mGUI = new ofxUICanvas(0,0,200,200);
+	mGUI->addFPS();
+	mGUI->addSpacer(150,2);
+	mGUI->addSlider("SCALE",0.1f,2,mScale,150,10);
+	mGUI->addSpacer(150,2);
+	mGUI->addLabelToggle("COLOR", false, 150,10);
+	mGUI->addDropDownList("RES", mSteps,150);
+	ofAddListener(mGUI->newGUIEvent,this,&testApp::guiEvent);	
 }
 
 void testApp::guiEvent(ofxUIEventArgs &e)

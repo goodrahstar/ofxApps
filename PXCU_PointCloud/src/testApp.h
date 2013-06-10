@@ -11,11 +11,12 @@ public:
 	void setup();
 	void update();
 	void draw();
-
+	void exit();
+	
 private:
 	bool mColor;
 	int mDW, mDH, mCW, mCH, mSkip, mTotal;
-	float mScale;
+	float mScale, mXOffset, mYOffset;
 	short *mDepthMap;
 
 	float *mUVMap;
@@ -28,6 +29,7 @@ private:
 	ofVbo mVBO;
 
 	ofxUICanvas *mGUI;
+	void setupGUI();
 	void guiEvent(ofxUIEventArgs &e);
 
 	PXCUPipeline_Instance mSession;
