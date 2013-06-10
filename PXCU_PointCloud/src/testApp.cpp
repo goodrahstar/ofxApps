@@ -71,23 +71,27 @@ void testApp::update()
 						float yoffs = mDH*0.5f;
 						float vx = ofMap(x,0,mDW,-xoffs,xoffs);
 						float vy = ofMap(y,0,mDH,-yoffs,yoffs);
-						mVerts.push_back(ofVec3f(vx,vy,ofMap((float)mDepthMap[di],0,1800,-240,240)));
+						//mVerts.push_back(ofVec3f(vx,vy,ofMap((float)mDepthMap[di],0,1800,-240,240)));
 						
 						if(mColor)
 						{
 							int sx=(int)(mUVMap[(y*mDW+x)*2+0]*mDW+0.5) * 2;
 							int sy=(int)(mUVMap[(y*mDW+x)*2+1]*mDH+0.5) * 2;
-							if(sx>=0&&sx<mCW&&sy>=0&&sy<mCH)
+							if(sx>0&&sx<mCW&&sy>0&&sy<mCH)
 							{
 								//crack out individual color vals and scale
 								float _r = mRGBMap[(sy*mCW+sx)*4]/255.0f;
 								float _g = mRGBMap[(sy*mCW+sx)*4+1]/255.0f;
 								float _b = mRGBMap[(sy*mCW+sx)*4+2]/255.0f;
 								mColors.push_back(ofFloatColor(_r,_g,_b,1.0f));
+								mVerts.push_back(ofVec3f(vx,vy,ofMap((float)mDepthMap[di],0,1800,-240,240)));
 							}
 						}
 						else
+						{
 							mColors.push_back(ofFloatColor(1,1,1,1));
+							mVerts.push_back(ofVec3f(vx,vy,ofMap((float)mDepthMap[di],0,1800,-240,240)));
+						}
 					}
 				}
 			}
@@ -109,7 +113,7 @@ void testApp::draw()
 	cam.begin();
 	glEnable(GL_DEPTH_TEST);	
 
-	ofScale(mScale, -mScale, mScale); // make y point down
+	ofScale(mScale, -mScale, -mScale); // make y point down
 	if(mTotal>0)
 		mVBO.draw(GL_POINTS, 0, mTotal);
 
