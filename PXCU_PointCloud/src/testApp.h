@@ -13,9 +13,11 @@ public:
 	void draw();
 
 private:
+	bool mColor;
 	int mDW, mDH, mCW, mCH, mSkip, mTotal;
 	float mScale;
 	short *mDepthMap;
+
 	float *mUVMap;
 	unsigned char *mRGBMap;
 	vector<ofVec3f> mVerts;
@@ -24,7 +26,7 @@ private:
 
 	ofEasyCam cam;
 	ofVbo mVBO;
-	
+
 	ofxUICanvas *mGUI;
 	void guiEvent(ofxUIEventArgs &e);
 
