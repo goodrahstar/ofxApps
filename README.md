@@ -14,6 +14,10 @@ Samples using the C-style interface (PXCUPipeline):
 <ul>
 <li>Requires <a href="https://github.com/rezaali/ofxUI">ofxUI</a> and ofxXmlSettings</li>
 </ul>
+<li><b>PXCU_Voice</b> - Speech Recognition example for Dictation and Command&Control modes</li>
+<ul>
+	<li>This example uses the C++ UtilPipeline as opposed to C PXCUPipeline</li>
+</ul>
 </ul>
 To use the C-style interface in an ofx project:
 <ul>
