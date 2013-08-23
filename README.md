@@ -1,41 +1,52 @@
-<b>openFrameworks apps from the [Perceptual Computing Lab](http://about.me/intelperceptual)</b><br/>
-<b>Download the [Perceptual Computing SDK](http://software.intel.com/en-us/vcsource/tools/perceptual-computing-sdk)</b><br/>
-<b>Download [openFrameworks](http://openframeworks.cc)</b><br/>
-<br/>
-Sync this repo into your <b>$(OFX_ROOT)/apps</b> folder so you end up with something like:<br/>
-<b>of_v0.7.4_vs2010_release/apps/ofxApps</b><br/>
-<br/>
+# PCSDK openFrameworks Examples
+
+openFrameworks example apps from the [Perceptual Computing Lab](http://about.me/intelperceptual)
+
+## Prerequisites
+	
+- Download & install the [Perceptual Computing SDK](http://software.intel.com/en-us/vcsource/tools/perceptual-computing-sdk)
+- Download & Install [openFrameworks](http://openframeworks.cc)
+
+## Installation
+
+Sync this repo into your **$(OFX_ROOT)/apps** folder so you end up with something like:
+
+	of_v0.8.0_vs_release/apps/ofxApps
+
 Samples using the C-style interface (PXCUPipeline):
-<ul>
-<li><b>PXCU_Capture</b> - Video capture (RGB, depth, blobs, ir)</li>
-<li><b>PXCU_Faces</b> - Face location and landmark tracking</li>
-<li><b>PXCU_Hands</b> - Hand and Fingertip detection</li>
-<li><b>PXCU_PointCloud (untested as of 06.09)</b> - Point cloud rendering using VBOs</li>
-<ul>
-<li>Requires <a href="https://github.com/rezaali/ofxUI">ofxUI</a> and ofxXmlSettings</li>
-</ul>
-<li><b>PXCU_Voice</b> - Speech Recognition example for Dictation and Command&Control modes</li>
-<ul>
-	<li>This example uses the C++ UtilPipeline as opposed to C PXCUPipeline</li>
-</ul>
-</ul>
-To use the C-style interface in an ofx project:
-<ul>
-<li>Add the directories <b>$(PCSDK_DIR)\include</b>, <b>$(PCSDK_DIR)\sample\common\include</b> and <b>$(PCSDK_DIR)\framework\common\pxcupipeline\include</b> to your include directories</li>
-<li>Add the directories <b>$(PCSDK_DIR)\lib\win32</b> and <b>$(PCSDK_DIR)\framework\common\lib\win32</b> to your library directories</li>
-<li>Include the <b>pxcupipeline.h</b> header</li>
-<li>Add <b>pxcupipeline.cpp</b> to your project's source files, found in <b>$(PCSDK_DIR)\framework\common\pxcupipeline\src</b>
-<li>Add the following .cpp files from <b>$(PCSDK_DIR)\sample\common\src</b> to your project:
-<ul>
-<li>util_capture.cpp</li>
-<li>util_capture_file.cpp</li>
-<li>util_captureimpl.cpp</li>
-<li>util_pipeline_face.cpp</li>
-<li>util_pipeline_gesture.cpp</li>
-<li>util_pipeline_raw.cpp</li>
-<li>util_pipeline_voice.cpp</li>
-</ul>
-<li>Add <b>libpxc_d.lib</b> and <b>ipppxcu_l.lib</b> as library inputs for Debug</li>
-<li>Add <b>libpxc.lib</b> and <b>ipppxcu_l.lib</b> as library inputs for Release</li>
-</ul>
+
+- **PXCU_Capture** - Video capture (RGB, depth, blobs, ir)
+- **PXCU_Faces** - Face location and landmark tracking
+- **PXCU_Hands** - Hand and Fingertip detection
+- **PXCU_PointCloud (untested as of 06.09)** - Point cloud rendering using VBOs
+	- Requires [ofxUI](https://github.com/rezaali/ofxUI) and ofxXmlSettings
+- **PXCU_Voice** - Speech Recognition example for Dictation and Command&Control modes
+	- This example uses the C++ UtilPipeline as opposed to C PXCUPipeline
+
+## C-Style Interface
+
+- Add the directories `$(PCSDK_DIR)\include`, `$(PCSDK_DIR)\sample\common\include` and `$(PCSDK_DIR)\framework\common\pxcupipeline\include` to your include directories
+
+- Add the directories `$(PCSDK_DIR)\lib\win32` and `$(PCSDK_DIR)\framework\common\lib\win32` to your library directories
+
+- Include the `pxcupipeline.h` header
+in `$(PCSDK_DIR)\fra
+- Add `pxcupipeline.cpp` to your project's source files, found mework\common\pxcupipeline\src`
+
+- Add the following .cpp files from `$(PCSDK_DIR)\sample\common\src` to your project:
+
+	- `util_capture.cpp`
+	- `util_capture_file.cpp`
+	- `util_captureimpl.cpp`
+	- `util_pipeline_face.cpp`
+	- `util_pipeline_gesture.cpp`
+	- `util_pipeline_raw.cpp`
+	- `util_pipeline_voice.cpp`
+
+- Add `libpxc_d.lib` and `ipppxcu_l.lib` as library inputs for Debug
+
+- Add `libpxc.lib` and `ipppxcu_l.lib` as library inputs for Release
+
+## Blame
+
 Questions, Comments, Diatribes, or specific samples you'd like to see? Email [Seth](mailto:seth.gibson1@gmail.com)
